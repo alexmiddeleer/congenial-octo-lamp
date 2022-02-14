@@ -1,0 +1,26 @@
+{
+  "name": "test-runner",
+  "version": "0.0.1",
+  "description": "A fast and simple javascript testing tool.",
+  "main": "index.js",
+  "scripts": {
+    "test": "./scripts/run-tests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexmiddeleer/congenial-octo-lamp.git"
+  },
+  "author": "Alex Middeleer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alexmiddeleer/congenial-octo-lamp/issues"
+  },
+  "homepage": "https://github.com/alexmiddeleer/congenial-octo-lamp#readme",
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.2.0"
+  }
+}

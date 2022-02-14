@@ -1,7 +1,6 @@
-function d(s, fn) {
-  console.log(s);
+export default function init () {
+  const result = {
+    count: () => 0
+  }
+  return result
 }
-
-
-d('some samples', () => {
-});
