@@ -4,17 +4,17 @@
 const { spawnSync } = require('child_process')
 
 function runTests () {
-  const { status, stderr, stdout } = spawnSync('node', ['out.js'])
+  const { status, stdout } = spawnSync('node', ['out.js'])
   if (status > 0) {
-    console.log(`Failed to run test out.js: ${stderr}`)
+    console.log(`Some tests failed ❌ ${stdout}`)
   } else {
-    console.log('Done running tests: ' + stdout)
+    console.log(`All tests passed ✅ ${stdout}`)
   }
 }
 function cleanUp () {
   const { status, stderr } = spawnSync('rm', ['out.js'])
   if (status > 0) {
-    console.log(`Failed to clean up test out.js: ${stderr}`)
+    console.log(`Failed to clean up test out.js ❌ ${stderr}`)
   }
 }
 
@@ -25,7 +25,7 @@ require('esbuild').build({
   watch: {
     onRebuild (error, result) {
       if (error) {
-        console.error('watch build failed:', error)
+        console.error('watch build failed ❌', error)
       } else {
         runTests()
         cleanUp()

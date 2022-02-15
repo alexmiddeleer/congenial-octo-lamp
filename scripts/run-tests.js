@@ -3,24 +3,38 @@
 
 const { spawnSync } = require('child_process')
 
+let s = 0
+
 {
   const { status, stderr, stdout } = spawnSync('npx', ['esbuild', 'tests/index.js', '--bundle', '--outfile=out.js'])
   if (status > 0) {
-    console.log(`Failed to build for tests: ${stderr}`)
+    console.log(`Failed to build for tests ❌ ${stderr}`)
+    s += status
+  } else {
+    console.log(`Build succeeded ✅ ${stdout}`)
   }
-  console.log(`Build succeeded: ${stdout}`)
 }
 {
   const { status, stderr, stdout } = spawnSync('node', ['out.js'])
   if (status > 0) {
-    console.log(`Failed to run test out.js: ${stderr}`)
+    console.log(`Something broke or tests failed ❌ ${stdout} ${stderr}`)
+    s += status
+  } else {
+    console.log(`Tests passed ✅ ${stdout}`)
   }
-  console.log(`Done running tests: ${stdout}`)
 }
 {
   const { status, stderr, stdout } = spawnSync('rm', ['out.js'])
   if (status > 0) {
-    console.log(`Failed to clean up test out.js: ${stderr}`)
+    console.log(`Failed to clean up test out.js ❌ ${stderr}`)
+    s += status
+  } else {
+    console.log(`Cleaned up ✅ ${stdout}`)
   }
-  console.log(`Done: ${stdout}`)
 }
+
+if (s > 0) {
+  console.log('System not nominal ❌')
+  process.exit(1)
+}
+process.exit(0)

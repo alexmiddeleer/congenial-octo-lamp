@@ -2,8 +2,15 @@
 
 import init from '../index.js'
 
+let s = 0
+
+const fail = () => s++
+
 const asserty = (b, s) => {
-  if (!b) console.log('Assertion failure: ' + s)
+  if (!b) {
+    console.log('Assertion failure: ' + s)
+    fail()
+  }
 }
 
 const assertEquals = (a, b, s) => {
@@ -13,3 +20,8 @@ const assertEquals = (a, b, s) => {
 const result = init()
 
 assertEquals(result.count(), 0, 'result count should be 0 if no tests run')
+
+if (s > 0) {
+  process.exit(1)
+}
+process.exit(0)
