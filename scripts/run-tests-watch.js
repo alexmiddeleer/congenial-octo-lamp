@@ -14,7 +14,7 @@ function runTests () {
 function cleanUp () {
   const { status, stderr } = spawnSync('rm', ['out.js'])
   if (status > 0) {
-    console.log(`Failed to clean up test out.js ❌ ${stderr}`)
+    console.log(`Failed to clean up ❌ ${stderr}`)
   }
 }
 
@@ -25,7 +25,7 @@ require('esbuild').build({
   watch: {
     onRebuild (error, result) {
       if (error) {
-        console.error('watch build failed ❌', error)
+        console.error('build failed ❌', error)
       } else {
         runTests()
         cleanUp()
