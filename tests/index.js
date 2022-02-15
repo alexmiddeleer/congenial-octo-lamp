@@ -19,7 +19,7 @@ const assertEquals = (a, b, s) => {
 
 const result = init()
 
-assertEquals(result.count(), 1, 'result count should be 0 if no tests run')
+assertEquals(result.count(), 0, 'result count should be 0 if no tests run')
 
 if (s > 0) {
   process.exit(1)
