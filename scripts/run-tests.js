@@ -4,7 +4,6 @@
 const { spawnSync } = require('child_process')
 
 let s = 0
-const buildStatus = 0
 
 {
   const { status, stderr, stdout } = spawnSync('npx', ['esbuild', 'tests/index.js', '--bundle', '--outfile=out.js'])
