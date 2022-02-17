@@ -6,7 +6,7 @@ const { spawnSync } = require('child_process')
 let s = 0
 
 {
-  const { status, stderr, stdout } = spawnSync('npx', ['esbuild', 'tests/index.js', '--bundle', '--outfile=out.js'])
+  const { status, stderr, stdout } = spawnSync('npx', ['esbuild', process.env.TEST_ENTRY, '--bundle', '--outfile=out.js'])
   if (status > 0) {
     console.log(`Failed to build for tests ❌ ${stderr}`)
     process.exit(1)

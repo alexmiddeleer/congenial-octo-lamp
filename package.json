@@ -4,7 +4,8 @@
   "description": "A fast and simple javascript testing tool.",
   "main": "index.js",
   "scripts": {
-    "test": "./scripts/run-tests.js",
+    "test": "TEST_ENTRY=tests/index.test.js ./scripts/run-tests.js",
+    "test:watch": "TEST_ENTRY=tests/index.test.js ./scripts/run-tests-watch.js",
     "lint": "eslint '**/*.js'"
   },
   "repository": {

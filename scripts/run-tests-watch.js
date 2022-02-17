@@ -19,7 +19,7 @@ function cleanUp () {
 }
 
 require('esbuild').build({
-  entryPoints: ['tests/index.js'],
+  entryPoints: [process.env.TEST_ENTRY],
   outfile: 'out.js',
   bundle: true,
   watch: {
