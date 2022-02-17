@@ -1,6 +1,6 @@
 'use strict'
 
-import init from '../index.js'
+import init from '../src/index.js'
 
 let s = 0
 
