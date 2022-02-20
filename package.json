@@ -17,6 +17,7 @@
   "bugs": {
     "url": "https://github.com/alexmiddeleer/congenial-octo-lamp/issues"
   },
+  "type": "module",
   "homepage": "https://github.com/alexmiddeleer/congenial-octo-lamp#readme",
   "devDependencies": {
     "esbuild": "^0.14.21",

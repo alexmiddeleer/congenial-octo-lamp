@@ -1,5 +1,8 @@
-exports.runTests = () => {
-  const { status, stdout, stderr } = require('child_process').spawnSync('node', ['out.js'])
+import ChildProcess from 'child_process'
+import { build as esbuild } from 'esbuild'
+
+export const runTests = () => {
+  const { status, stdout, stderr } = ChildProcess.spawnSync('node', ['out.js'])
   if (status > 0) {
     console.log(`Test exec status = ${status} ❌ ${stdout} ${stderr}`)
   } else {
@@ -8,17 +11,19 @@ exports.runTests = () => {
   return status
 }
 
-exports.cleanUp = () => {
-  const { status, stderr } = require('child_process').spawnSync('rm', ['out.js'])
+export const cleanUp = () => {
+  const { status, stderr } = ChildProcess.spawnSync('rm', ['out.js'])
   if (status > 0) {
     console.log(`Failed to clean up ❌ ${stderr}`)
   }
   return status
 }
 
-exports.build = (args = {}) => {
-  return require('esbuild').build({
+export const build = (args = {}) => {
+  return esbuild({
     entryPoints: [process.env.TEST_ENTRY],
+    platform: 'node',
+    format: 'esm',
     outfile: 'out.js',
     bundle: true,
     ...args
@@ -26,7 +31,7 @@ exports.build = (args = {}) => {
 }
 
 const standardError = new Error('System not nominal')
-exports.afterBuild = ({ errors, warnings }) => {
+export const afterBuild = ({ errors, warnings }) => {
   if (warnings && warnings.length) {
     console.log('warnings 🟡')
     console.log(warnings.join('\n'))
@@ -37,8 +42,8 @@ exports.afterBuild = ({ errors, warnings }) => {
   } else {
     console.log('Build succeeded ✅ ')
   }
-  let s = exports.runTests()
-  s += exports.cleanUp()
+  let s = runTests()
+  s += cleanUp()
   if (s > 0) {
     throw standardError
   }

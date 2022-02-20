@@ -1,7 +1,7 @@
 #!/usr/local/bin/node
 'use strict'
 
-const { runTests, build, cleanUp, afterBuild } = require('./test-utils')
+import { runTests, build, cleanUp, afterBuild } from './test-utils.js'
 
 build({
   watch: {

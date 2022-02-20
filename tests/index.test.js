@@ -1,42 +1,33 @@
 'use strict'
 
 import init from '../src/index.js'
-import { } from './ResultReport.test.js'
+import assert from 'assert'
 
-let s = 0
-
-const fail = () => s++
-
-const asserty = (b, s) => {
-  if (!b) {
-    console.log('Assertion failure: ' + s)
-    fail()
-  }
-}
-
-const assertEquals = (a, b, s) => {
-  asserty(a === b, `${s}: expected ${a} to equal ${b} (but it did not)`)
-}
-
-{
-  const result = init()
-  assertEquals(!!result.report, true, 'It has a report')
-}
-
-{
-  const result = init()
-  assertEquals(!!result.report, true, 'It has a report')
-  assertEquals(result.report.count(), 0, 'Its report has zero results')
-}
-
-{
-  const result = init({
-    tests: [{}]
+(async function () {
+  const fs = await import('fs')
+  fs.readdirSync('tests').forEach(async f => {
+    if (f.indexOf('index') > -1) {
+      return
+    }
+    await import(`./tests/${f}`)
   })
-  assertEquals(!!result.report, true, 'It has a report')
-  assertEquals(result.report.count(), 1, 'Its report has 1 result')
-}
 
-if (s > 0) {
-  process.exit(1)
-}
+  {
+    const result = init()
+    assert.equal(!!result.report, true, 'It has a report')
+  }
+
+  {
+    const result = init()
+    assert.equal(!!result.report, true, 'It has a report')
+    assert.equal(result.report.count(), 0, 'Its report has zero results')
+  }
+
+  {
+    const result = init({
+      tests: [{}]
+    })
+    assert.equal(!!result.report, true, 'It has a report')
+    assert.equal(result.report.count(), 1, 'Its report has 1 result')
+  }
+})()

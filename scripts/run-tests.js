@@ -1,7 +1,7 @@
 #!/usr/local/bin/node
 'use strict'
 
-const { build, afterBuild } = require('./test-utils')
+import { build, afterBuild } from './test-utils.js'
 
 build().then(result => {
   try {
