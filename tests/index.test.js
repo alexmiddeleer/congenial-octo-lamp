@@ -20,7 +20,7 @@ const assertEquals = (a, b, s) => {
 
 {
   const result = init()
-  assertEquals(!!result.report, true 'It has a report')
+  assertEquals(!!result.report, true, 'It has a report')
 }
 
 {
