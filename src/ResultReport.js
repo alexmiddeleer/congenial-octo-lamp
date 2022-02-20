@@ -6,4 +6,8 @@ export default class ResultReport {
   count () {
     return this.results.length
   }
+
+  addResult (r) {
+    this.results.push(r)
+  }
 }

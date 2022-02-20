@@ -1,6 +1,7 @@
 'use strict'
 
 import init from '../src/index.js'
+import { } from './ResultReport.test.js'
 
 let s = 0
 
@@ -17,11 +18,25 @@ const assertEquals = (a, b, s) => {
   asserty(a === b, `${s}: expected ${a} to equal ${b} (but it did not)`)
 }
 
-const result = init()
+{
+  const result = init()
+  assertEquals(!!result.report, true 'It has a report')
+}
 
-assertEquals(result.count(), 0, 'result count should be 0 if no tests run')
+{
+  const result = init()
+  assertEquals(!!result.report, true, 'It has a report')
+  assertEquals(result.report.count(), 0, 'Its report has zero results')
+}
+
+{
+  const result = init({
+    tests: [{}]
+  })
+  assertEquals(!!result.report, true, 'It has a report')
+  assertEquals(result.report.count(), 1, 'Its report has 1 result')
+}
 
 if (s > 0) {
   process.exit(1)
 }
-process.exit(0)

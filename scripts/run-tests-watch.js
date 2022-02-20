@@ -1,38 +1,23 @@
 #!/usr/local/bin/node
 'use strict'
 
-const { spawnSync } = require('child_process')
+const { runTests, build, cleanUp, afterBuild } = require('./test-utils')
 
-function runTests () {
-  const { status, stdout } = spawnSync('node', ['out.js'])
-  if (status > 0) {
-    console.log(`Some tests failed ❌ ${stdout}`)
-  } else {
-    console.log(`All tests passed ✅ ${stdout}`)
-  }
-}
-function cleanUp () {
-  const { status, stderr } = spawnSync('rm', ['out.js'])
-  if (status > 0) {
-    console.log(`Failed to clean up ❌ ${stderr}`)
-  }
-}
-
-require('esbuild').build({
-  entryPoints: [process.env.TEST_ENTRY],
-  outfile: 'out.js',
-  bundle: true,
+build({
   watch: {
     onRebuild (error, result) {
       if (error) {
-        console.error('build failed ❌', error)
+        console.error('rebuild failed ❌', error)
       } else {
         runTests()
         cleanUp()
       }
     }
   }
-}).then(() => {
-  runTests()
-  cleanUp()
+}).then(result => {
+  try {
+    afterBuild(result)
+  } catch {
+    // Wait for rebuild.
+  }
 })

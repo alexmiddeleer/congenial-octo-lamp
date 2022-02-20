@@ -1,40 +1,12 @@
 #!/usr/local/bin/node
 'use strict'
 
-const { spawnSync } = require('child_process')
+const { build, afterBuild } = require('./test-utils')
 
-let s = 0
-
-{
-  const { status, stderr, stdout } = spawnSync('npx', ['esbuild', process.env.TEST_ENTRY, '--bundle', '--outfile=out.js'])
-  if (status > 0) {
-    console.log(`Failed to build for tests ❌ ${stderr}`)
+build().then(result => {
+  try {
+    afterBuild(result)
+  } catch {
     process.exit(1)
-  } else {
-    console.log(`Build succeeded ✅ ${stdout}`)
   }
-}
-{
-  const { status, stderr, stdout } = spawnSync('node', ['out.js'])
-  if (status > 0) {
-    console.log(`Something broke or tests failed ❌ ${stdout} ${stderr}`)
-    s += status
-  } else {
-    console.log(`Tests passed ✅ ${stdout}`)
-  }
-}
-{
-  const { status, stderr, stdout } = spawnSync('rm', ['out.js'])
-  if (status > 0) {
-    console.log(`Failed to clean up test out.js ❌ ${stderr}`)
-    s += status
-  } else {
-    console.log(`Cleaned up ✅ ${stdout}`)
-  }
-}
-
-if (s > 0) {
-  console.log('System not nominal ❌')
-  process.exit(1)
-}
-process.exit(0)
+})
